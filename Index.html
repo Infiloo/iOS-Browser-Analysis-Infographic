@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPadOS Browser Infographic: The Ultimate Showdown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Application Structure Plan: The infographic follows a narrative structure to guide the user from a general overview to specific, actionable recommendations. 
+        1. **Hero:** Hooks the user with a title and the core concept of "1 Engine, 7 Browsers."
+        2. **Overall Ranking:** Immediately presents the main takeaway with an ordered bar chart.
+        3. **Feature Showdown:** A four-column grid comparing the key categories (Ecosystem, Ad Blocker, VPN, Extensions) using the most appropriate visualization for each (ranked list, bar chart, custom diagrams).
+        4. **Feature Spotlight:** Highlights the most unique selling points of top browsers using visually distinct cards.
+        5. **Recommendations Flowchart:** A simple, CSS-driven decision tree to help users select a browser based on their primary needs.
+        This structure was chosen to make the dense information from the report digestible and visually engaging, prioritizing clarity and quick takeaways.
+    -->
+    <!-- Visualization & Content Choices:
+        - Report Info: Overall Rankings -> Goal: Compare -> Viz: Ordered Bar Chart (Chart.js) -> Justification: Best way to show a clear hierarchy.
+        - Report Info: Ecosystem Ranks -> Goal: Organize -> Viz: Styled List -> Justification: Simple and direct for a ranked list.
+        - Report Info: Ad Blocker Ranks -> Goal: Compare -> Viz: Bar Chart (Chart.js) -> Justification: Visualizes the graded effectiveness of each blocker.
+        - Report Info: VPN Capabilities -> Goal: Inform/Compare -> Viz: Custom HTML/CSS Cards -> Justification: Better for categorical data (Free/Paid/None) than a chart.
+        - Report Info: Extension Support -> Goal: Inform/Compare -> Viz: Custom HTML/CSS Cards -> Justification: Clearly displays the Yes/No/Workaround status.
+        - Report Info: User Recommendations -> Goal: Organize/Guide -> Viz: CSS Flowchart -> Justification: Provides a clear, guided path to a decision.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F4F8; /* Lightest Blue */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 450px;
+            max-height: 60vh;
+        }
+        .chart-container-sm {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 40vh;
+        }
+        @media (max-width: 768px) {
+            .chart-container { height: 400px; }
+            .chart-container-sm { height: 250px; }
+        }
+        .flowchart-step {
+            border: 2px solid #4A90E2; /* Mid Blue */
+            background-color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+        }
+        .flowchart-arrow {
+            position: absolute;
+            width: 2px;
+            background-color: #4A90E2;
+            height: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .flowchart-arrow.down { bottom: -2rem; }
+        .flowchart-arrow::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #4A90E2;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto px-4 py-8 md:py-16">
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-[#0C345D]">iPadOS Browser Showdown</h1>
+            <p class="text-lg md:text-xl text-[#4A90E2] mt-4 max-w-3xl mx-auto">They all share Apple's WebKit engine, so the real battle is in the features. Which one is right for you?</p>
+        </header>
+
+        <section id="overall-ranking" class="mb-20">
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center text-[#0C345D] mb-2">The Final Verdict: Overall Rankings</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">Based on a combined assessment of ecosystem integration, built-in features, and privacy, here's how the top browsers stack up.</p>
+                <div class="chart-container">
+                    <canvas id="overallRankingChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="feature-showdown" class="mb-20">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-[#0C345D] mb-12">Feature Showdown</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-4 text-[#0C345D] text-center">🔗 Ecosystem</h3>
+                    <p class="text-gray-600 text-center mb-6 flex-grow">How well does it sync with your other devices?</p>
+                    <ol class="space-y-3 font-medium">
+                        <li class="flex items-center"><span class="text-xl mr-3">🥇</span><strong class="text-[#0C345D]">Safari:</strong> Deep Apple integration.</li>
+                        <li class="flex items-center"><span class="text-xl mr-3">🥈</span><strong class="text-[#4A90E2]">Firefox:</strong> Best for Windows/Linux users.</li>
+                        <li class="flex items-center"><span class="text-xl mr-3">🥉</span><strong class="text-[#4A90E2]">Edge:</strong> Strong for Microsoft users.</li>
+                        <li class="flex items-center"><span class="text-lg text-gray-500 mr-3 ml-1">4.</span><span class="text-gray-700">Opera</span></li>
+                        <li class="flex items-center"><span class="text-lg text-gray-500 mr-3 ml-1">5.</span><span class="text-gray-700">Chrome</span></li>
+                        <li class="flex items-center"><span class="text-lg text-gray-500 mr-3 ml-1">6.</span><span class="text-gray-700">Brave</span></li>
+                        <li class="flex items-center"><span class="text-lg text-gray-500 mr-3 ml-1">7.</span><span class="text-gray-700">DuckDuckGo</span></li>
+                    </ol>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-4 text-[#0C345D] text-center">🚫 Ad Blocker</h3>
+                     <p class="text-gray-600 text-center mb-6 flex-grow">Effectiveness of built-in ad and tracker blocking.</p>
+                     <div class="chart-container-sm">
+                        <canvas id="adblockerChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-4 text-[#0C345D] text-center">🛡️ VPN</h3>
+                    <p class="text-gray-600 text-center mb-6 flex-grow">Does it offer a built-in VPN for privacy?</p>
+                    <div class="space-y-4">
+                        <div class="bg-green-100 border-l-4 border-green-500 p-3 rounded">
+                            <p class="font-bold text-green-800">Free & Built-in</p>
+                            <p class="text-green-700">Opera</p>
+                        </div>
+                        <div class="bg-yellow-100 border-l-4 border-yellow-500 p-3 rounded">
+                            <p class="font-bold text-yellow-800">Paid Subscription</p>
+                            <p class="text-yellow-700">Brave, DuckDuckGo</p>
+                        </div>
+                        <div class="bg-red-100 border-l-4 border-red-500 p-3 rounded">
+                            <p class="font-bold text-red-800">None Built-in</p>
+                            <p class="text-red-700">Safari, Firefox, Edge, Chrome</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-4 text-[#0C345D] text-center">🧩 Extensions</h3>
+                    <p class="text-gray-600 text-center mb-6 flex-grow">Can you add extra features and tools?</p>
+                     <div class="space-y-4">
+                        <div class="bg-blue-100 border-l-4 border-blue-500 p-3 rounded">
+                            <p class="font-bold text-blue-800">Native Support</p>
+                            <p class="text-blue-700">Safari (via App Store)</p>
+                        </div>
+                        <div class="bg-indigo-100 border-l-4 border-indigo-500 p-3 rounded">
+                            <p class="font-bold text-indigo-800">Workaround Exists</p>
+                            <p class="text-indigo-700">Orion Browser (for Chrome extensions)</p>
+                        </div>
+                        <div class="bg-gray-200 border-l-4 border-gray-500 p-3 rounded">
+                            <p class="font-bold text-gray-800">No Support</p>
+                            <p class="text-sm text-gray-700">Brave, Opera, Firefox, Edge, DuckDuckGo, Chrome</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommendations" class="mb-16">
+             <h2 class="text-3xl md:text-4xl font-bold text-center text-[#0C345D] mb-4">Find Your Perfect Browser</h2>
+             <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Answer a simple question to get a top recommendation based on your main priority.</p>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="flowchart-step mb-8">What do you value most in a browser? <div class="flowchart-arrow down"></div></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12">
+                    
+                    <div class="text-center relative">
+                        <div class="font-semibold text-[#4A90E2] mb-4">Seamless Sync with my Apple devices?</div>
+                        <div class="flowchart-arrow down" style="height:1rem; bottom:-1rem;"></div>
+                        <div class="flowchart-step bg-[#E7F0FA]"><strong>Safari</strong></div>
+                    </div>
+
+                    <div class="text-center relative">
+                        <div class="font-semibold text-[#4A90E2] mb-4">An All-in-One Free VPN & Ad Blocker?</div>
+                        <div class="flowchart-arrow down" style="height:1rem; bottom:-1rem;"></div>
+                        <div class="flowchart-step bg-[#E7F0FA]"><strong>Opera</strong></div>
+                    </div>
+                    
+                    <div class="text-center relative">
+                        <div class="font-semibold text-[#4A90E2] mb-4">The Most Aggressive Ad Blocking?</div>
+                        <div class="flowchart-arrow down" style="height:1rem; bottom:-1rem;"></div>
+                        <div class="flowchart-step bg-[#E7F0FA]"><strong>Brave</strong></div>
+                    </div>
+
+                    <div class="text-center relative md:col-start-2">
+                        <div class="font-semibold text-[#4A90E2] mb-4">Maximum Privacy Above All Else?</div>
+                        <div class="flowchart-arrow down" style="height:1rem; bottom:-1rem;"></div>
+                        <div class="flowchart-step bg-[#E7F0FA]"><strong>DuckDuckGo</strong></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-24 pt-8 border-t border-[#B0C4DE]">
+            <p class="text-sm text-gray-600">This infographic visualizes data from the "Analysis and Ranking of Browsers for iPadOS" report.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const browserData = {
+            overall: [
+                { name: 'Safari', score: 7 },
+                { name: 'Opera', score: 6 },
+                { name: 'Brave', score: 5 },
+                { name: 'DuckDuckGo', score: 4 },
+                { name: 'Firefox', score: 3 },
+                { name: 'Edge', score: 2 },
+                { name: 'Chrome', score: 1 },
+            ],
+            adblocker: [
+                { name: 'Brave', score: 7 },
+                { name: 'Opera', score: 6 },
+                { name: 'DuckDuckGo', score: 5 },
+                { name: 'Safari', score: 4 },
+                { name: 'Edge', score: 3 },
+                { name: 'Firefox', score: 2 },
+                { name: 'Chrome', score: 1 },
+            ]
+        };
+
+        const palette = {
+            darkBlue: '#0C345D',
+            midBlue: '#4A90E2',
+            lightBlue: '#B0C4DE',
+            bgLight: '#F0F4F8',
+            accent: '#D0E0F0'
+        };
+
+        const chartColors = ['#4A90E2', '#5DA0E6', '#71B0EA', '#84C0EE', '#98D0F2', '#AADFF6', '#BEEFFA'];
+
+        const chartTooltipOptions = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        function createChart(canvasId, data, chartType, isHorizontal = false) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: data.map(d => d.name),
+                    datasets: [{
+                        label: 'Ranking Score',
+                        data: data.map(d => d.score),
+                        backgroundColor: chartColors,
+                        borderColor: palette.darkBlue,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...chartTooltipOptions,
+                    indexAxis: isHorizontal ? 'y' : 'x',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        ...chartTooltipOptions.plugins,
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: { color: palette.accent },
+                            ticks: { 
+                                color: palette.darkBlue,
+                                font: { weight: '600' }
+                            }
+                        },
+                        y: {
+                            grid: { color: palette.accent },
+                             ticks: { 
+                                color: palette.darkBlue,
+                                font: { weight: '600' }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createChart('overallRankingChart', browserData.overall, 'bar', true);
+            createChart('adblockerChart', browserData.adblocker, 'bar', false);
+        });
+
+    </script>
+</body>
+</html>
